@@ -1,4 +1,4 @@
-module github.com/stric-security/phishbeat
+module github.com/stric-co/phishbeat
 
 go 1.14
 
