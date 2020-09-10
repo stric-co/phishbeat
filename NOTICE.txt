@@ -1,0 +1,5 @@
+phishbeat
+Copyright 2020 Carter Smith [The Stric Security Group]
+
+This product includes software developed by The Apache Software
+Foundation (http://www.apache.org/).

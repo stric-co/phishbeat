@@ -1,0 +1,24 @@
+- key: phishbeat
+  title: phishbeat
+  description:
+  fields:
+    - name: domain
+      type: string
+      required: true
+      description: >
+        Domain that was identified as in-use.
+    - name: original_domain
+      type: string
+      required: true
+      description: >
+        Original (legitimate) domain.
+    - name: webpage_body
+      type: string
+      required: true
+      description: >
+        Body of the webpage attached to this domain.
+    - name: data
+      type: object
+      required: true
+      description: >
+        Body of the CT log item.
