@@ -4,6 +4,7 @@ Welcome to Phishbeat, a lightweight shipper, designed to monitor Certificate Tra
 
 ## Architecture
 Phishbeat hooks into [Certificate Transparency (CT) logs](https://www.certificate-transparency.org/) to get a realtime feed of certificate generation. This allows Phishbeat to detect the realtime usage of domains. Generally, when a domain is registered with one of the larger domain registrars, a dummy "this domain has been bought" site is created, usually with a SSL certificate.
+
 ![alt text](https://github.com/stric-co/phishbeat/raw/master/images/architecture.png "Architecture")
 
 You can use the [CaliDog certstream server](https://certstream.calidog.io/) or [run your own](https://github.com/CaliDog/certstream-server).
