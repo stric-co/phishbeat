@@ -12,6 +12,12 @@ Ensure that this folder is at the following location:
 
 * [Golang](https://golang.org/dl/) 1.7
 
+### Elastic Detections
+In the `_detections` folder, you will find two detection rules for the Elastic SIEM.
+
+### Machine Learning
+In the `_ml` folder, you'll find some Elastic Machine Learning jobs to compliment Phishbeat.
+
 ### Init Project
 To get running with Phishbeat and also install the
 dependencies, run the following command:
