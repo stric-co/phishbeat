@@ -1,0 +1,31 @@
+{
+  "job_id": "phishbeat-event_rate",
+  "description": """This job detects anomalies in the event rate of data going into the Phishbeat Index. It does not deem "no data" as anomalous.""",
+  "groups": [
+    "stric",
+    "phishbeat"
+  ],
+  "analysis_config": {
+    "bucket_span": "15m",
+    "detectors": [
+      {
+        "function": "non_zero_count"
+      }
+    ],
+    "influencers": [],
+    "summary_count_field_name": "doc_count"
+  },
+  "data_description": {
+    "time_field": "@timestamp"
+  },
+  "custom_settings": {
+    "created_by": "single-metric-wizard"
+  },
+  "analysis_limits": {
+    "model_memory_limit": "11MB"
+  },
+  "model_plot_config": {
+    "enabled": true,
+    "annotations_enabled": true
+  }
+}

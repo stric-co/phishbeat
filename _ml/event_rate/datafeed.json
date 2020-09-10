@@ -1,0 +1,31 @@
+{
+  "datafeed_id": "datafeed-phishbeat-event_rate",
+  "job_id": "phishbeat-event_rate",
+  "indices": [
+    "phishbeat-*"
+  ],
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match_all": {}
+        }
+      ]
+    }
+  },
+  "aggregations": {
+    "buckets": {
+      "date_histogram": {
+        "field": "@timestamp",
+        "fixed_interval": "900000ms"
+      },
+      "aggregations": {
+        "@timestamp": {
+          "max": {
+            "field": "@timestamp"
+          }
+        }
+      }
+    }
+  }
+}
