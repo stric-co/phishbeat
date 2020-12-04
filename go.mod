@@ -40,6 +40,7 @@ require (
 	github.com/prometheus/procfs v0.1.3 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20200313005456-10cdbea86bc0 // indirect
 	github.com/reviewdog/reviewdog v0.10.1
+	github.com/stric-security/phishbeat v0.0.0-20200814075457-e8eb4c0b7ae5
 	github.com/tsg/go-daemon v0.0.0-20200207173439-e704b93fd89b
 	github.com/urso/magetools v0.0.0-20200125210132-c2e338f92f3a // indirect
 	go.elastic.co/apm v1.8.0 // indirect

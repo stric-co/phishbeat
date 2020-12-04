@@ -59,6 +59,7 @@ func (bt *phishbeat) Run(b *beat.Beat) error {
 	}
 	// Create our mutations to listen for
 	mutations := runPermutations(bt.config.Domain)
+	fmt.Printf("%+v", mutations)
 	logp.Info("Running with %d domains.", len(mutations))
 	// Creat our CertStream connection
 	stream, errStream := certstream.CertStreamEventStream(bt.config.CertStreamSkipHeartbeat, bt.config.CertStreamEndpoint)
@@ -80,20 +81,24 @@ func (bt *phishbeat) Run(b *beat.Beat) error {
 					},
 				})
 			}else{
-				for _, domain := range ctItem.Data.LeafCert.AllDomains {
-					if inList(domain, mutations) {
-						logp.Info("Found match for domain: %s", domain)
-						event := beat.Event{
-							Timestamp: time.Now(),
-							Fields: common.MapStr{
-								"type":   b.Info.Name,
-								"domain": domain,
-								"original_domain": bt.config.Domain,
-								"website_content": "",
-							},
+				for _, domain_ := range ctItem.Data.LeafCert.AllDomains {
+					domainSplit := strings.Split(domain_, ".")
+					for _, domain := range domainSplit{
+						if inList(domain, mutations) {
+							logp.Info("Found match for domain: %s", domain)
+							event := beat.Event{
+								Timestamp: time.Now(),
+								Fields: common.MapStr{
+									"type":   b.Info.Name,
+									"domain": domain,
+									"original_domain": bt.config.Domain,
+									"data": ctItem.Data,
+								},
+							}
+							bt.client.Publish(event)
 						}
-						bt.client.Publish(event)
 					}
+
 				}
 			}
 		case err := <-errStream:
@@ -115,8 +120,9 @@ func getHTTPBody(domain string) string{
 }
 
 // helper function to specify permutation attacks to be performed
-func runPermutations(domain string) []string {
-	var validDomains []string = nil
+func runPermutations(domain_ string) []string {
+	domainSplit := strings.Split(domain_, ".")
+	domain := domainSplit[0]
 	domains := additionAttack(domain)
 	domains = append(domains, omissionAttack(domain)...)
 	domains = append(domains, homographAttack(domain)...)
@@ -127,12 +133,14 @@ func runPermutations(domain string) []string {
 	domains = append(domains, replacementAttack(domain)...)
 	domains = append(domains, bitsquattingAttack(domain)...)
 	domains = append(domains, transpositionAttack(domain)...)
-	for _, domain := range domains {
+	// Add original
+	domains = append(domains, domain)
+	/*for _, domain := range domains {
 		if validateDomainName(domain) {
 			validDomains = append(validDomains, domain)
 		}
-	}
-	return validDomains
+	}*/
+	return domains
 }
 
 // returns a count of characters in a word
